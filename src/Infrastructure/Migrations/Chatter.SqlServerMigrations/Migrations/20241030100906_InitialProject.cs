@@ -225,10 +225,11 @@ namespace Chatter.SqlServerMigrations.Migrations
                 name: "RoomChatterUser",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RoomId = table.Column<int>(type: "int", nullable: false),
                     ChatterUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsBlocked = table.Column<bool>(type: "bit", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -236,7 +237,7 @@ namespace Chatter.SqlServerMigrations.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RoomChatterUser", x => new { x.ChatterUserId, x.RoomId });
+                    table.PrimaryKey("PK_RoomChatterUser", x => x.Id);
                     table.ForeignKey(
                         name: "FK_RoomChatterUser_AspNetUsers_ChatterUserId",
                         column: x => x.ChatterUserId,
@@ -332,6 +333,12 @@ namespace Chatter.SqlServerMigrations.Migrations
                 name: "IX_Invitations_SenderUserId",
                 table: "Invitations",
                 column: "SenderUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RoomChatterUser_ChatterUserId_RoomId",
+                table: "RoomChatterUser",
+                columns: new[] { "ChatterUserId", "RoomId" },
+                filter: "IsDeleted = 0");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoomChatterUser_RoomId",

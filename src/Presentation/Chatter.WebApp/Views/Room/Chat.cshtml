@@ -236,7 +236,7 @@
                         if (message.SenderUserId == currentUserId)
                         {
                             <div class="message sent-message ">
-                                <span class="message username">@message.UserInfo.UserName</span>
+                                <span class="message username">@message.UserInfo?.UserName</span>
                                 <div class="message-content">
                                     <p class="message-text">@message.Message</p>
                                     <small class="message-date">@message.SentDate.ToLocalTime().ToShortTimeString()</small>
@@ -246,7 +246,7 @@
                         else
                         {
                             <div class="message received-message ">
-                                <span class="message username">@message.UserInfo.UserName</span>
+                                <span class="message username">@message.UserInfo?.UserName</span>
                                 <div class="message-content">
                                     <p class="message-text">@message.Message</p>
                                     <small class="message-date">@message.SentDate.ToLocalTime().ToShortTimeString()</small>
